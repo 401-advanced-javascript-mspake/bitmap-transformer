@@ -18,7 +18,12 @@ function Bitmap(filePath) {
 Bitmap.prototype.parse = function(buffer) {
   this.buffer = buffer;
   this.type = buffer.toString('utf-8', 0, 2);
-  //... and so on
+  this.fileSize = buffer.readInt32LE(2);
+  this.pixelDataStart = buffer.readInt16LE(10);
+  this.width = buffer.readInt16LE(18);
+  this.height = buffer.readInt16LE(22);
+  this.bpp = buffer.readInt16LE(28);
+  this.imageSize = buffer.readInt16LE(34);
 };
 
 /**
