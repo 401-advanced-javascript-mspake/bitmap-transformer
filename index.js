@@ -1,6 +1,7 @@
 'use strict';
 
 const fs = require('fs');
+const testTransform = require('./lib/test-transform.js');
 
 /**
  * Bitmap -- receives a file name, used in the transformer to note the new buffer
@@ -63,6 +64,7 @@ const doTheInversion = (bmp) => {
 const transforms = {
   greyscale: transformGreyscale,
   invert: doTheInversion,
+  test: testTransform,
 };
 
 // ------------------ GET TO WORK ------------------- //
