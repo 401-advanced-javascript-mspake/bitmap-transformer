@@ -2,6 +2,10 @@
 
 const fs = require('fs');
 const testTransform = require('./lib/test-transform.js');
+const greyscale = require('./lib/greyscale.js');
+
+
+//TODO: Figure out a way to validate that the bmp instance is actually valid before trying to transform it
 
 /**
  * Bitmap -- receives a file name, used in the transformer to note the new buffer
@@ -37,21 +41,6 @@ Bitmap.prototype.transform = function(operation) {
   this.newFile = this.file.replace(/\.bmp/, `.${operation}.bmp`);
 };
 
-/**
- * Sample Transformer (greyscale)
- * Would be called by Bitmap.transform('greyscale')
- * Pro Tip: Use "pass by reference" to alter the bitmap's buffer in place so you don't have to pass it around ...
- * @param bmp
- */
-const transformGreyscale = (bmp) => {
-
-  console.log('Transforming bitmap into greyscale', bmp);
-
-  //TODO: Figure out a way to validate that the bmp instance is actually valid before trying to transform it
-
-  //TODO: alter bmp to make the image greyscale ...
-
-};
 
 const doTheInversion = (bmp) => {
   bmp = {};
@@ -62,7 +51,7 @@ const doTheInversion = (bmp) => {
  * Each property represents a transformation that someone could enter on the command line and then a function that would be called on the bitmap to do this job
  */
 const transforms = {
-  greyscale: transformGreyscale,
+  greyscale: greyscale,
   invert: doTheInversion,
   test: testTransform,
 };
@@ -78,6 +67,13 @@ function transformWithCallbacks() {
     }
 
     bitmap.parse(buffer);
+
+    fs.writeFile('./test.txt', bitmap.buffer.toString(), (err, out) => {
+      if (err) {
+        throw err;
+      }
+      console.log('writing file');
+    });
 
     bitmap.transform(operation);
 
