@@ -3,6 +3,8 @@
 const fs = require('fs');
 const testTransform = require('./lib/test-transform.js');
 const greyscale = require('./lib/greyscale.js');
+const stars = require('./lib/stars.js');
+
 
 
 //TODO: Figure out a way to validate that the bmp instance is actually valid before trying to transform it
@@ -41,19 +43,14 @@ Bitmap.prototype.transform = function(operation) {
   this.newFile = this.file.replace(/\.bmp/, `.${operation}.bmp`);
 };
 
-
-const doTheInversion = (bmp) => {
-  bmp = {};
-};
-
 /**
  * A dictionary of transformations
  * Each property represents a transformation that someone could enter on the command line and then a function that would be called on the bitmap to do this job
  */
 const transforms = {
   greyscale: greyscale,
-  invert: doTheInversion,
   test: testTransform,
+  stars: stars,
 };
 
 // ------------------ GET TO WORK ------------------- //
@@ -67,13 +64,6 @@ function transformWithCallbacks() {
     }
 
     bitmap.parse(buffer);
-
-    fs.writeFile('./test.txt', bitmap.buffer.toString(), (err, out) => {
-      if (err) {
-        throw err;
-      }
-      console.log('writing file');
-    });
 
     bitmap.transform(operation);
 

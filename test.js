@@ -49,12 +49,12 @@ fs.readFile(file, (err, buffer) => {
   console.log(buffer.readInt16LE(18));
   console.log(buffer.readInt16LE(22));
   console.log(buffer.readInt16LE(28));
-  console.log(buffer.readInt16LE(34));
+  console.log(buffer.readInt16LE(34)); //image size
   console.log(buffer.readInt16LE(46)); //colors used
   console.log(buffer.readInt16LE(50)); //important colors
+  //54 has something: 42 47 52 73
 
-
-  console.log(buffer.slice(1146));
+  console.log(buffer.slice(60));
 
 
 });
