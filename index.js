@@ -37,10 +37,10 @@ Bitmap.prototype.parse = function(buffer) {
  * @param operation
  */
 Bitmap.prototype.transform = function(operation) {
-  // if(this.file.slice(this.file.length - 4) === 'bpm') {
-  transforms[operation](this);
-  this.newFile = this.file.replace(/\.bmp/, `.${operation}.bmp`);
-  // }
+  if(this.file.includes('.bmp')) {
+    transforms[operation](this);
+    this.newFile = this.file.replace(/\.bmp/, `.${operation}.bmp`);
+  }
 };
 
 /**
