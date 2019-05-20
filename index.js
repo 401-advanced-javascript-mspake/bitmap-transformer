@@ -1,6 +1,12 @@
 'use strict';
 
 const fs = require('fs');
+const stars = require('./lib/stars.js');
+const upsidedown = require('./lib/upsidedown.js');
+
+
+
+//TODO: Figure out a way to validate that the bmp instance is actually valid before trying to transform it
 
 /**
  * Bitmap -- receives a file name, used in the transformer to note the new buffer
@@ -31,29 +37,10 @@ Bitmap.prototype.parse = function(buffer) {
  * @param operation
  */
 Bitmap.prototype.transform = function(operation) {
-  // This is really assumptive and unsafe
-  transforms[operation](this);
-  this.newFile = this.file.replace(/\.bmp/, `.${operation}.bmp`);
-};
-
-/**
- * Sample Transformer (greyscale)
- * Would be called by Bitmap.transform('greyscale')
- * Pro Tip: Use "pass by reference" to alter the bitmap's buffer in place so you don't have to pass it around ...
- * @param bmp
- */
-const transformGreyscale = (bmp) => {
-
-  console.log('Transforming bitmap into greyscale', bmp);
-
-  //TODO: Figure out a way to validate that the bmp instance is actually valid before trying to transform it
-
-  //TODO: alter bmp to make the image greyscale ...
-
-};
-
-const doTheInversion = (bmp) => {
-  bmp = {};
+  if(this.file.includes('.bmp')) {
+    transforms[operation](this);
+    this.newFile = this.file.replace(/\.bmp/, `.${operation}.bmp`);
+  }
 };
 
 /**
@@ -61,8 +48,8 @@ const doTheInversion = (bmp) => {
  * Each property represents a transformation that someone could enter on the command line and then a function that would be called on the bitmap to do this job
  */
 const transforms = {
-  greyscale: transformGreyscale,
-  invert: doTheInversion,
+  stars: stars,
+  upsidedown: upsidedown,
 };
 
 // ------------------ GET TO WORK ------------------- //
