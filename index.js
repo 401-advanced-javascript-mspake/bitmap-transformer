@@ -1,9 +1,8 @@
 'use strict';
 
 const fs = require('fs');
-const testTransform = require('./lib/test-transform.js');
-const greyscale = require('./lib/greyscale.js');
 const stars = require('./lib/stars.js');
+const upsidedown = require('./lib/upsidedown.js');
 
 
 
@@ -38,9 +37,10 @@ Bitmap.prototype.parse = function(buffer) {
  * @param operation
  */
 Bitmap.prototype.transform = function(operation) {
-  // This is really assumptive and unsafe
+  // if(this.file.slice(this.file.length - 4) === 'bpm') {
   transforms[operation](this);
   this.newFile = this.file.replace(/\.bmp/, `.${operation}.bmp`);
+  // }
 };
 
 /**
@@ -48,9 +48,8 @@ Bitmap.prototype.transform = function(operation) {
  * Each property represents a transformation that someone could enter on the command line and then a function that would be called on the bitmap to do this job
  */
 const transforms = {
-  greyscale: greyscale,
-  test: testTransform,
   stars: stars,
+  upsidedown: upsidedown,
 };
 
 // ------------------ GET TO WORK ------------------- //
